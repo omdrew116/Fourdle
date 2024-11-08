@@ -14,6 +14,7 @@
     --border-color: #555;
     --key-color: #333;
     --key-shadow: rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease; /* Add transition for smooth change */
 }
 
 * {
@@ -367,6 +368,7 @@ h2 {
 
 input:checked + .slider {
     background-color: #2196F3;
+    transition: background-color 0.3s ease; /* Add transition for smooth change */
 }
 
 input:focus + .slider {
@@ -375,6 +377,7 @@ input:focus + .slider {
 
 input:checked + .slider:before {
     transform: translateX(26px);
+    transition: transform 0.3s ease; /* Add transition for smooth change */
 }
 
 

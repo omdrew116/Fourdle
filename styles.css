@@ -6,15 +6,22 @@
     --border-color: #ccc;
     --key-color: #fff;
     --key-shadow: rgba(0, 0, 0, 0.1);
+    --container-bg: #fff;
+    --guess-item-bg: #f8f8f8;
+    --digit-bg: #f8f8f8;
+    --install-prompt-bg: #f8f8f8;
 }
 
-.dark-mode {
-    --background-color: #333;
-    --text-color: #eee;
-    --border-color: #555;
-    --key-color: #333;
-    --key-shadow: rgba(255, 255, 255, 0.1);
-    transition: background-color 0.3s ease; /* Add transition for smooth change */
+[data-theme="dark"] {
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --border-color: #404040;
+    --key-color: #2c2c2c;
+    --key-shadow: rgba(0, 0, 0, 0.3);
+    --container-bg: #1e1e1e;
+    --guess-item-bg: #2c2c2c;
+    --digit-bg: #2c2c2c;
+    --install-prompt-bg: #2c2c2c;
 }
 
 * {
@@ -41,25 +48,39 @@ body {
     margin: 0;
     padding: 20px;
     touch-action: manipulation;
-    transition: background-color 0.3s ease; /* Add transition for smooth change */
 }
 
 .container {
-    background-color: #fff;
+    background-color: var(--container-bg);
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     width: 100%;
-    transition: background-color 0.3s ease; /* Add transition for smooth change */
 }
 
 .game-header {
     text-align: center;
     margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: relative;
+}
+
+.theme-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.theme-toggle:hover {
+    background-color: var(--key-shadow);
 }
 
 h1 {
@@ -73,7 +94,7 @@ h1 {
     justify-content: center;
     gap: 20px;
     font-size: 1.1em;
-    color: #666;
+    color: var(--text-color);
 }
 
 .game-board {
@@ -100,9 +121,9 @@ h1 {
     justify-content: center;
     font-size: 20px;
     font-weight: bold;
-    background-color: #f8f8f8;
+    background-color: var(--digit-bg);
     box-shadow: 0 2px 4px var(--key-shadow);
-    transition: background-color 0.3s ease, border-color 0.3s ease; /* Add transition for smooth change */
+    color: var(--text-color);
 }
 
 .guess-display {
@@ -124,7 +145,8 @@ h1 {
     font-weight: bold;
     background-color: var(--key-color);
     box-shadow: 0 2px 4px var(--key-shadow);
-    transition: all 0.2s ease, border-color 0.3s ease; /* Add transition for smooth change */
+    transition: all 0.2s ease;
+    color: var(--text-color);
 }
 
 .guess-digit.active {
@@ -157,7 +179,7 @@ h1 {
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.2s ease, background-color 0.3s ease; /* Add transition for smooth change */
+    transition: all 0.2s ease;
     box-shadow: 0 2px 4px var(--key-shadow);
 }
 
@@ -216,7 +238,7 @@ h1 {
 .progress-bar {
     width: 100%;
     height: 8px;
-    background-color: #eee;
+    background-color: var(--border-color);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -230,12 +252,12 @@ h1 {
 
 .history-container {
     margin-top: 20px;
-    border-top: 2px solid #eee;
+    border-top: 2px solid var(--border-color);
     padding-top: 20px;
 }
 
 h2 {
-    color: #666;
+    color: var(--text-color);
     font-size: 1.2em;
     margin-bottom: 15px;
     text-align: center;
@@ -249,7 +271,7 @@ h2 {
     overflow-y: auto;
     padding: 8px;
     scrollbar-width: thin;
-    scrollbar-color: var(--primary-color) #eee;
+    scrollbar-color: var(--primary-color) var(--border-color);
 }
 
 .guesses-list::-webkit-scrollbar {
@@ -257,7 +279,7 @@ h2 {
 }
 
 .guesses-list::-webkit-scrollbar-track {
-    background: #eee;
+    background: var(--border-color);
     border-radius: 3px;
 }
 
@@ -268,13 +290,14 @@ h2 {
 
 .guess-item {
     padding: 12px;
-    background-color: #f8f8f8;
+    background-color: var(--guess-item-bg);
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     animation: slideIn 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px var(--key-shadow);
+    color: var(--text-color);
 }
 
 @keyframes slideIn {
@@ -312,7 +335,7 @@ h2 {
 .install-prompt {
     margin-top: 20px;
     padding: 15px;
-    background-color: #f8f8f8;
+    background-color: var(--install-prompt-bg);
     border-radius: 10px;
     text-align: center;
 }
@@ -327,59 +350,6 @@ h2 {
     font-size: 14px;
     padding: 8px 20px;
 }
-
-/* Dark Mode Toggle Styles */
-.dark-mode-switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-
-.dark-mode-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 34px; /* Rounded corners */
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%; /* Circular toggle */
-}
-
-input:checked + .slider {
-    background-color: #2196F3;
-    transition: background-color 0.3s ease; /* Add transition for smooth change */
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-    transform: translateX(26px);
-    transition: transform 0.3s ease; /* Add transition for smooth change */
-}
-
 
 @media (max-width: 480px) {
     .container {
@@ -413,22 +383,6 @@ input:checked + .slider:before {
         gap: 5px;
         text-align: center;
         padding: 10px;
-    }
-    .dark-mode-switch {
-        width: 40px;
-        height: 24px;
-    }
-    .slider {
-        border-radius: 24px;
-    }
-    .slider:before {
-        height: 16px;
-        width: 16px;
-        left: 4px;
-        bottom: 4px;
-    }
-    input:checked + .slider:before {
-        transform: translateX(16px);
     }
 }
 

@@ -1,3 +1,35 @@
+// Theme management
+const themeToggle = document.getElementById('theme-toggle');
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+const getCurrentTheme = () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        return savedTheme;
+    }
+    return prefersDarkScheme.matches ? 'dark' : 'light';
+};
+
+const setTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    
+    // Update theme-color meta tag for PWA
+    const themeColor = theme === 'dark' ? '#121212' : '#4CAF50';
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', themeColor);
+};
+
+// Initialize theme
+setTheme(getCurrentTheme());
+
+// Theme toggle event listener
+themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+});
+
 // Game state
 let gameState = {
     hiddenNumber: [],
@@ -19,8 +51,6 @@ const attemptCount = document.getElementById('attempt-count');
 const bestScore = document.getElementById('best-score');
 const statusMessage = document.getElementById('status-message');
 const progressBar = document.getElementById('progress');
-const darkModeToggle = document.getElementById('dark-mode-toggle');
-const body = document.body;
 
 // Initialize game
 const initGame = () => {
@@ -175,10 +205,6 @@ numKeys.forEach(key => {
 backspaceKey.addEventListener('click', handleBackspace);
 submitButton.addEventListener('click', submitGuess);
 newGameButton.addEventListener('click', initGame);
-
-darkModeToggle.addEventListener('change', () => {
-    body.classList.toggle('dark-mode');
-});
 
 // Handle keyboard input
 document.addEventListener('keydown', (e) => {

@@ -19,6 +19,8 @@ const attemptCount = document.getElementById('attempt-count');
 const bestScore = document.getElementById('best-score');
 const statusMessage = document.getElementById('status-message');
 const progressBar = document.getElementById('progress');
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+const body = document.body;
 
 // Initialize game
 const initGame = () => {
@@ -173,6 +175,10 @@ numKeys.forEach(key => {
 backspaceKey.addEventListener('click', handleBackspace);
 submitButton.addEventListener('click', submitGuess);
 newGameButton.addEventListener('click', initGame);
+
+darkModeToggle.addEventListener('change', () => {
+    body.classList.toggle('dark-mode');
+});
 
 // Handle keyboard input
 document.addEventListener('keydown', (e) => {
